@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
 
 const MoodTracker = () => {
   const [score, setScore] = useState("");
@@ -18,7 +18,7 @@ const MoodTracker = () => {
   };
 
   const getSuggestion = (score) => {
-    const numScore=Number(score)
+    const numScore = Number(score);
     if (numScore <= 2) return "要不要做點讓自己開心的事？";
     if (numScore === 3) return "平靜也是很好的狀態";
     return "太棒了！繼續保持！";
@@ -44,8 +44,24 @@ const MoodTracker = () => {
   };
 
   const deleteRecord = (id) => {
-    setRecords(records.filter((record) => record.id !==id));
+    setRecords(records.filter((record) => record.id !== id));
   };
+useEffect(()=>{
+  const saved=localStorage.getItem('moodRecords');
+  if(saved){
+    try{JSON.parse(saved);
+    }
+    catch(error){
+      console.error("載入資料失敗",error);
+    }
+  }
+},[])
+
+useEffect(()=>{
+  if(records.length>0){
+  localStorage.setItem('moodRecords',JSON.stringify(records))};
+},[records])
+
   return (
     <div className="bg-white-100 p-1 m-1 border-2 ">
       <h2 className="text-xl font-bold mb-4">心情追蹤器</h2>
@@ -81,22 +97,32 @@ const MoodTracker = () => {
         </button>
       </div>
       {/* 統計區域 */}
-      <button onClick={addRecord} className="border-1 bg-green-100">紀錄</button>
+      <button onClick={addRecord} className="border-1 bg-green-100">
+        紀錄
+      </button>
       <div className="bg-white bg-opacity-50">
         <h3>統計資料</h3>
         <p>總紀錄數：{records.length}</p>
         <p>平均分數：{getAverageScore()}</p>
       </div>
       {/* 歷史紀錄*/}
-      {(records.length===0)?(<div>開始紀錄心情吧</div>):
-      (records.map((record) => (
-        <div key={record.id} className="bg-white p-2 mb-2 rounded">
-          <div>{record.score}</div>
-          <div>{record.text}</div>
-          <div>{record.date}</div>
-          <button onClick={() => deleteRecord(record.id)} className="border-1 bg-red-200">刪除紀錄</button>
-        </div>)
-      ))}
+      {records.length === 0 ? (
+        <div>開始紀錄心情吧</div>
+      ) : (
+        records.map((record) => (
+          <div key={record.id} className="bg-white p-2 mb-2 rounded">
+            <div>{record.score}</div>
+            <div>{record.text}</div>
+            <div>{record.date}</div>
+            <button
+              onClick={() => deleteRecord(record.id)}
+              className="border-1 bg-red-200"
+            >
+              刪除紀錄
+            </button>
+          </div>
+        ))
+      )}
     </div>
   );
 };
