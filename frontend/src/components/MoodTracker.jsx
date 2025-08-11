@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
 const MoodTracker = () => {
   const [score, setScore] = useState("");
@@ -9,19 +9,21 @@ const MoodTracker = () => {
     setText("");
   };
 
-  const MoodRecord=({record,deleteRecord})=>{
-    return(          <div key={record.id} className="bg-white p-2 mb-2 rounded">
-      <div>{record.score}</div>
-      <div>{record.text}</div>
-      <div>{record.date}</div>
-      <button
-        onClick={() => deleteRecord(record.id)}
-        className="border-1 bg-red-200"
-      >
-        刪除紀錄
-      </button>
-    </div>)
-  }
+  const MoodRecord = ({ record, deleteRecord }) => {
+    return (
+      <div key={record.id} className="bg-white p-2 mb-2 rounded">
+        <div>{record.score}</div>
+        <div>{record.text}</div>
+        <div>{record.date}</div>
+        <button
+          onClick={() => deleteRecord(record.id)}
+          className="border-1 bg-red-200"
+        >
+          刪除紀錄
+        </button>
+      </div>
+    );
+  };
   const getMoodColor = (score) => {
     if (!score) return "bg-gray-100";
     const numScore = Number(score); // 轉成數字
@@ -60,21 +62,24 @@ const MoodTracker = () => {
   const deleteRecord = (id) => {
     setRecords(records.filter((record) => record.id !== id));
   };
-useEffect(()=>{
-  const saved=localStorage.getItem('moodRecords');
-  if(saved){
-    try{setRecords(JSON.parse(saved));
+  useEffect(() => {
+    const saved = localStorage.getItem("moodRecords");
+    if (saved) {
+      try {
+        setRecords(JSON.parse(saved));
+      } catch (error) {
+        console.error("載入資料失敗", error);
+      }
     }
-    catch(error){
-      console.error("載入資料失敗",error);
-    }
-  }
-},[])
+  }, []);
 
-useEffect(()=>{
-  if(records.length>0){
-  localStorage.setItem('moodRecords',JSON.stringify(records))};
-},[records])
+  useEffect(() => {
+    if (records.length > 0) {
+      localStorage.setItem("moodRecords", JSON.stringify(records));
+    }else{
+      localStorage.removeItem('moodRecords')
+    }
+  }, [records]);
 
   return (
     <div className="bg-white-100 p-1 m-1 border-2 ">
@@ -124,7 +129,11 @@ useEffect(()=>{
         <div>開始紀錄心情吧</div>
       ) : (
         records.map((record) => (
-<MoodRecord key={record.id} record={record} deleteRecord={deleteRecord}/>
+          <MoodRecord
+            key={record.id}
+            record={record}
+            deleteRecord={deleteRecord}
+          />
         ))
       )}
     </div>
