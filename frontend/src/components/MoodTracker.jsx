@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect} from "react";
 
 const MoodTracker = () => {
   const [score, setScore] = useState("");
@@ -8,6 +8,20 @@ const MoodTracker = () => {
     setScore("");
     setText("");
   };
+
+  const MoodRecord=({record,deleteRecord})=>{
+    return(          <div key={record.id} className="bg-white p-2 mb-2 rounded">
+      <div>{record.score}</div>
+      <div>{record.text}</div>
+      <div>{record.date}</div>
+      <button
+        onClick={() => deleteRecord(record.id)}
+        className="border-1 bg-red-200"
+      >
+        刪除紀錄
+      </button>
+    </div>)
+  }
   const getMoodColor = (score) => {
     if (!score) return "bg-gray-100";
     const numScore = Number(score); // 轉成數字
@@ -110,17 +124,7 @@ useEffect(()=>{
         <div>開始紀錄心情吧</div>
       ) : (
         records.map((record) => (
-          <div key={record.id} className="bg-white p-2 mb-2 rounded">
-            <div>{record.score}</div>
-            <div>{record.text}</div>
-            <div>{record.date}</div>
-            <button
-              onClick={() => deleteRecord(record.id)}
-              className="border-1 bg-red-200"
-            >
-              刪除紀錄
-            </button>
-          </div>
+<MoodRecord key={record.id} record={record} deleteRecord={deleteRecord}/>
         ))
       )}
     </div>
