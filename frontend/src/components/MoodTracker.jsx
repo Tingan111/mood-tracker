@@ -49,7 +49,7 @@ const MoodTracker = () => {
 useEffect(()=>{
   const saved=localStorage.getItem('moodRecords');
   if(saved){
-    try{JSON.parse(saved);
+    try{setRecords(JSON.parse(saved));
     }
     catch(error){
       console.error("載入資料失敗",error);
