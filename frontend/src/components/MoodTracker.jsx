@@ -14,7 +14,7 @@ const MoodTracker = () => {
       <div key={record.id} className="bg-white p-2 mb-2 rounded">
         <div>{record.score}</div>
         <div>{record.text}</div>
-        <div>{record.date}</div>
+        <div>{record.date+record.time}</div>
         <button
           onClick={() => deleteRecord(record.id)}
           className="border-1 bg-red-200"
@@ -47,6 +47,7 @@ const MoodTracker = () => {
       score: parseInt(score),
       text: text || "沒有備注",
       date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString()
     };
     setRecords([...records, newRecord]);
 
