@@ -14,7 +14,7 @@ const MoodTracker = () => {
       <div key={record.id} className="bg-white p-2 mb-2 rounded">
         <div>{record.score}</div>
         <div>{record.text}</div>
-        <div>{record.date+record.time}</div>
+        <div>{record.date + record.time}</div>
         <button
           onClick={() => deleteRecord(record.id)}
           className="border-1 bg-red-200"
@@ -49,8 +49,7 @@ const MoodTracker = () => {
       date: new Date().toLocaleDateString(),
       time: new Date().toLocaleTimeString(),
     };
-    console.log(addRecord);
-    
+
     setRecords([...records, newRecord]);
 
     setScore("");
@@ -79,8 +78,8 @@ const MoodTracker = () => {
   useEffect(() => {
     if (records.length > 0) {
       localStorage.setItem("moodRecords", JSON.stringify(records));
-    }else{
-      localStorage.removeItem('moodRecords')
+    } else {
+      localStorage.removeItem("moodRecords");
     }
   }, [records]);
 
@@ -141,7 +140,7 @@ const MoodTracker = () => {
       )}
       {/*統計圖表區*/}
       <MoodChart moodRecords={records} />
-      </div>
+    </div>
   );
 };
 
