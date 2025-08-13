@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import MoodChart from "./MoodChart";
 const MoodTracker = () => {
   const [score, setScore] = useState("");
   const [text, setText] = useState("");
@@ -47,8 +47,10 @@ const MoodTracker = () => {
       score: parseInt(score),
       text: text || "沒有備注",
       date: new Date().toLocaleDateString(),
-      time: new Date().toLocaleTimeString()
+      time: new Date().toLocaleTimeString(),
     };
+    console.log(addRecord);
+    
     setRecords([...records, newRecord]);
 
     setScore("");
@@ -137,7 +139,9 @@ const MoodTracker = () => {
           />
         ))
       )}
-    </div>
+      {/*統計圖表區*/}
+      <MoodChart moodRecords={records} />
+      </div>
   );
 };
 
