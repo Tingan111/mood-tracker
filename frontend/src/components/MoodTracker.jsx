@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import MoodChart from "./MoodChart";
+import MoodRecord from "./MoodRecord";
 const MoodTracker = () => {
   const [score, setScore] = useState("");
   const [text, setText] = useState("");
@@ -9,21 +10,7 @@ const MoodTracker = () => {
     setText("");
   };
 
-  const MoodRecord = ({ record, deleteRecord }) => {
-    return (
-      <div key={record.id} className="bg-white p-2 mb-2 rounded">
-        <div>{record.score}</div>
-        <div>{record.text}</div>
-        <div>{record.date + record.time}</div>
-        <button
-          onClick={() => deleteRecord(record.id)}
-          className="border-1 bg-red-200"
-        >
-          刪除紀錄
-        </button>
-      </div>
-    );
-  };
+
   const getMoodColor = (score) => {
     if (!score) return "bg-gray-100";
     const numScore = Number(score); // 轉成數字
