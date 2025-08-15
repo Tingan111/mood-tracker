@@ -3,6 +3,7 @@ import MoodChart from "./MoodChart";
 import MoodRecord from "./MoodRecord";
 import MoodSelect from "./MoodSelect";
 import MoodTextarea from "./MoodTextarea";
+import MoodSuggestion from "./MoodSuggestion";
 const MoodTracker = () => {
   const [score, setScore] = useState("");
   const [text, setText] = useState("");
@@ -82,8 +83,7 @@ const MoodTracker = () => {
         />
       </div>
       <MoodTextarea text={text} setText={setText} />
-
-      <div>建議： {score && <div>{getSuggestion(score)}</div>}</div>
+<MoodSuggestion score={score} getSuggestion={getSuggestion} />
       <div>
         顯示狀態區
         <div className="text-200 p-4 m-2 border-1">分數：{score}</div>
