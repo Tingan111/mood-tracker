@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import MoodChart from "./MoodChart";
 import MoodRecord from "./MoodRecord";
+import MoodSelect from "./MoodSelect";
 const MoodTracker = () => {
   const [score, setScore] = useState("");
   const [text, setText] = useState("");
@@ -9,7 +10,6 @@ const MoodTracker = () => {
     setScore("");
     setText("");
   };
-
 
   const getMoodColor = (score) => {
     if (!score) return "bg-gray-100";
@@ -74,18 +74,11 @@ const MoodTracker = () => {
     <div className="bg-white-100 p-1 m-1 border-2 ">
       <h2 className="text-xl font-bold mb-4">心情追蹤器</h2>
       <div>
-        <select
-          value={score}
-          className={`${getMoodColor(score)} p-4 m-2 border-2`}
-          onChange={(e) => setScore(e.target.value)}
-        >
-          <option value="">選擇心情分數</option>
-          <option value="1">1 - 😢 很糟</option>
-          <option value="2">2 - 😔 還好</option>
-          <option value="3">3 - 😐 平靜</option>
-          <option value="4">4 - 🙂 不錯</option>
-          <option value="5">5 - 😊 開心</option>
-        </select>
+        <MoodSelect
+          score={score}
+          setScore={setScore}
+          getMoodColor={getMoodColor}
+        />
       </div>
       <textarea
         value={text}
