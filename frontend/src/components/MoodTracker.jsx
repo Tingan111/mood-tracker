@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import MoodChart from "./MoodChart";
 import MoodRecord from "./MoodRecord";
 import MoodSelect from "./MoodSelect";
+import MoodTextarea from "./MoodTextarea";
 const MoodTracker = () => {
   const [score, setScore] = useState("");
   const [text, setText] = useState("");
@@ -80,13 +81,7 @@ const MoodTracker = () => {
           getMoodColor={getMoodColor}
         />
       </div>
-      <textarea
-        value={text}
-        placeholder="發生什麼事"
-        onChange={(e) => setText(e.target.value)}
-        className="border-1  p-4 m-2 "
-        rows="3"
-      ></textarea>
+      <MoodTextarea text={text} setText={setText} />
 
       <div>建議： {score && <div>{getSuggestion(score)}</div>}</div>
       <div>
