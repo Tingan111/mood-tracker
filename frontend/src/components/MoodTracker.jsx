@@ -4,6 +4,8 @@ import MoodRecord from "./MoodRecord";
 import MoodSelect from "./MoodSelect";
 import MoodTextarea from "./MoodTextarea";
 import MoodSuggestion from "./MoodSuggestion";
+import MoodStats from "./MoodStats";
+
 const MoodTracker = () => {
   const [score, setScore] = useState("");
   const [text, setText] = useState("");
@@ -83,7 +85,7 @@ const MoodTracker = () => {
         />
       </div>
       <MoodTextarea text={text} setText={setText} />
-<MoodSuggestion score={score} getSuggestion={getSuggestion} />
+      <MoodSuggestion score={score} getSuggestion={getSuggestion} />
       <div>
         顯示狀態區
         <div className="text-200 p-4 m-2 border-1">分數：{score}</div>
@@ -96,11 +98,7 @@ const MoodTracker = () => {
       <button onClick={addRecord} className="border-1 bg-green-100">
         紀錄
       </button>
-      <div className="bg-white bg-opacity-50">
-        <h3>統計資料</h3>
-        <p>總紀錄數：{records.length}</p>
-        <p>平均分數：{getAverageScore()}</p>
-      </div>
+      <MoodStats records={records} averageScore={getAverageScore} />
       {/* 歷史紀錄*/}
       {records.length === 0 ? (
         <div>開始紀錄心情吧</div>
