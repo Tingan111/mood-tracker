@@ -10,6 +10,9 @@ const MoodTracker = () => {
   const [score, setScore] = useState("");
   const [text, setText] = useState("");
   const [records, setRecords] = useState([]);
+  const [editingId, setEditingId] = useState(null);
+  const [editingScore, setEditingScore] = useState("");
+  const [editingText, setEditingText] = useState("");
   const handleSubmit = () => {
     setScore("");
     setText("");
@@ -55,6 +58,44 @@ const MoodTracker = () => {
   const deleteRecord = (id) => {
     setRecords(records.filter((record) => record.id !== id));
   };
+
+  const startEdit = (record) => {
+    setEditingId(record.id);
+    setEditingScore(record.score.toString());
+    setEditingText(record.text);
+  };
+
+  const saveEdit = () => {
+    if (!editingScore) return;
+    setRecords(
+      records.map((record) =>
+        record.id === editingId
+          ? {
+              ...record,
+              score: parseInt(editingScore),
+              text: editingText || "沒有備注",
+            }
+          : record
+      )
+    );
+    setEditingId(null);
+    setEditingScore("");
+    setEditingText("");
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditingScore("");
+    setEditingText("");
+ };
+  useEffect(() => {
+    if (records.length > 0) {
+      localStorage.setItem("moodRecords", JSON.stringify(records));
+    } else {
+      localStorage.removeItem("moodRecords");
+    }
+  }, [records]);
+
   useEffect(() => {
     const saved = localStorage.getItem("moodRecords");
     if (saved) {
@@ -65,14 +106,6 @@ const MoodTracker = () => {
       }
     }
   }, []);
-
-  useEffect(() => {
-    if (records.length > 0) {
-      localStorage.setItem("moodRecords", JSON.stringify(records));
-    } else {
-      localStorage.removeItem("moodRecords");
-    }
-  }, [records]);
 
   return (
     <div className="bg-white-100 p-1 m-1 border-2 ">
@@ -105,9 +138,18 @@ const MoodTracker = () => {
       ) : (
         records.map((record) => (
           <MoodRecord
-            key={record.id}
-            record={record}
-            deleteRecord={deleteRecord}
+          key={record.id}
+          record={record}
+          deleteRecord={deleteRecord}
+          editingId={editingId}
+          editingScore={editingScore}
+          setEditingScore={setEditingScore}
+          editingText={editingText}
+          setEditingText={setEditingText}
+          startEdit={startEdit}
+          saveEdit={saveEdit}
+          cancelEdit={cancelEdit}
+          getMoodColor={getMoodColor}
           />
         ))
       )}
