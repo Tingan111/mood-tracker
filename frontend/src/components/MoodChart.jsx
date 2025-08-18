@@ -11,39 +11,51 @@ import {
 
 const MoodChart = ({ moodRecords }) => {
   // 處理圖表資料
+
+  //取得最近7天的紀錄
   const processChartData = () => {
     if (!moodRecords || moodRecords.length === 0) {
       return [];
     }
 
-    //取得最近7天的紀錄
     const sortedRecords = [...moodRecords].sort(
-      (a, b) => new Date(a.date) - new Date(b.date).setMilliseconds(-7)
+      (a, b) =>
+        new Date(`${a.date} ${a.time}`) - new Date(`${b.date} ${b.time}`)
     );
 
-    return sortedRecords.map((record) => ({
-      date: new Date(record.date).toLocaleDateString("zh-TW", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-      }),
-      time: record.time.slice(0, 6),
+    return sortedRecords.map((record, index) => ({
+      // 用日期+時間作為 key，確保每筆資料都不同
+      date:`${record.date}`,
+      dateTime: `${record.date} ${record.time.slice(0, 6)}`,
+      // 如果同一天有多筆，顯示時間；如果只有一筆，只顯示日期
+      displayKey:
+        index > 0 && sortedRecords[index - 1].date === record.date
+          ? record.time.slice(0, 5) // 顯示時間
+          : new Date(record.date).toLocaleDateString("zh-TW", {
+              month: "numeric",
+              day: "numeric",
+            }), // 顯示日期
       score: record.score,
-      fullDate: `${record.date} ${record.time}`,
       text: record.text,
+      fullDate: `${record.date} ${record.time}`,
     }));
   };
   const chartData = processChartData();
-
+  const getUniqueDays = () => {
+    if (!moodRecords || moodRecords.length === 0) return 0;
+    
+    const uniqueDates = new Set(moodRecords.map(record => record.date));
+    return uniqueDates.size;
+  };
+  
   //自訂Tooltip 內容
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
 
       return (
         <div className="bg-white p-3 border-gray-300 rounded-lg shadow-lg">
-          <p className="font-semibold">{`日期：${label}`}</p>
-          <p className="text-sm text-gray-500">{`${data.time}`}</p>
+          <p className="text-sm text-gray-500">{`${data.dateTime}`}</p>
           <p className="text-blue-200">{`心情分數：${data.score}`}</p>
           {data.text && (
             <p className="text-gray-600 text-sm mt-1">{`備注：${data.text}`}</p>
@@ -69,7 +81,7 @@ const MoodChart = ({ moodRecords }) => {
   return (
     <div className="bg-white p-6 round-lg shadow-md border-2">
       <h3 className="text-lg font-semibold text-gray-800 mb-4">
-        心情趨勢圖(最近{chartData.length}天)
+        心情趨勢圖(最近{getUniqueDays()}天)
       </h3>
 
       <div className="h-64">
