@@ -13,10 +13,6 @@ const MoodTracker = () => {
   const [editingId, setEditingId] = useState(null);
   const [editingScore, setEditingScore] = useState("");
   const [editingText, setEditingText] = useState("");
-  const handleSubmit = () => {
-    setScore("");
-    setText("");
-  };
 
   const getMoodColor = (score) => {
     if (!score) return "bg-gray-100";
@@ -87,7 +83,7 @@ const MoodTracker = () => {
     setEditingId(null);
     setEditingScore("");
     setEditingText("");
- };
+  };
   useEffect(() => {
     if (records.length > 0) {
       localStorage.setItem("moodRecords", JSON.stringify(records));
@@ -123,9 +119,6 @@ const MoodTracker = () => {
         顯示狀態區
         <div className="text-200 p-4 m-2 border-1">分數：{score}</div>
         <div className="text-200 p-4 m-2 border-1">發生什麼事：{text}</div>
-        <button className="border-1" onClick={handleSubmit}>
-          清空內容
-        </button>
       </div>
       {/* 統計區域 */}
       <button onClick={addRecord} className="border-1 bg-green-100">
@@ -138,18 +131,18 @@ const MoodTracker = () => {
       ) : (
         records.map((record) => (
           <MoodRecord
-          key={record.id}
-          record={record}
-          deleteRecord={deleteRecord}
-          editingId={editingId}
-          editingScore={editingScore}
-          setEditingScore={setEditingScore}
-          editingText={editingText}
-          setEditingText={setEditingText}
-          startEdit={startEdit}
-          saveEdit={saveEdit}
-          cancelEdit={cancelEdit}
-          getMoodColor={getMoodColor}
+            key={record.id}
+            record={record}
+            deleteRecord={deleteRecord}
+            editingId={editingId}
+            editingScore={editingScore}
+            setEditingScore={setEditingScore}
+            editingText={editingText}
+            setEditingText={setEditingText}
+            startEdit={startEdit}
+            saveEdit={saveEdit}
+            cancelEdit={cancelEdit}
+            getMoodColor={getMoodColor}
           />
         ))
       )}
