@@ -104,8 +104,8 @@ const MoodTracker = () => {
   }, []);
 
   return (
-    <div className="bg-white-100 p-1 m-1 border-2 ">
-      <h2 className="text-xl font-bold mb-4">心情追蹤器</h2>
+    <div className="p-1 m-1 border-2 ">
+      <h2 className="text-xl font-bold mb-4 ">心情追蹤器</h2>
       <div>
         <MoodSelect
           score={score}
@@ -114,7 +114,6 @@ const MoodTracker = () => {
         />
       </div>
       <MoodTextarea text={text} setText={setText} />
-      <MoodSuggestion score={score} getSuggestion={getSuggestion} />
       <div>
         顯示狀態區
         <div className="text-200 p-4 m-2 border-1">分數：{score}</div>
