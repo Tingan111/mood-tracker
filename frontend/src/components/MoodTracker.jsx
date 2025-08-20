@@ -3,7 +3,6 @@ import MoodChart from "./MoodChart";
 import MoodRecord from "./MoodRecord";
 import MoodSelect from "./MoodSelect";
 import MoodTextarea from "./MoodTextarea";
-import MoodSuggestion from "./MoodSuggestion";
 import MoodStats from "./MoodStats";
 
 const MoodTracker = () => {
