@@ -23,13 +23,6 @@ const MoodTracker = () => {
     return "bg-green-100";
   };
 
-  const getSuggestion = (score) => {
-    const numScore = Number(score);
-    if (numScore <= 2) return "要不要做點讓自己開心的事？";
-    if (numScore === 3) return "平靜也是很好的狀態";
-    return "太棒了！繼續保持！";
-  };
-
   const addRecord = () => {
     if (!score) return;
     const newRecord = {
