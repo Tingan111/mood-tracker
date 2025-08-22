@@ -3,21 +3,26 @@
 功能特色
 
 📊 心情評分記錄 (1-5分)
+
 📝 情緒備註與描述
+
 📈 心情趨勢圖表顯示
+
 💾 本地資料儲存
 
 技術架構
 
 前端框架: React 18 + Vite
+
 狀態管理: React useState
+
 樣式: Tailwind CSS
+
 圖表: Chart.js
+
 資料儲存: localStorage (暫時)
 
-快速開始
-安裝與執行
-bash# 進入專案目錄
+# 進入專案目錄
 cd frontend
 
 # 安裝相依套件
