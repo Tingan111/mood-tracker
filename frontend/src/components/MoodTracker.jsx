@@ -8,7 +8,18 @@ import MoodStats from "./MoodStats";
 const MoodTracker = () => {
   const [score, setScore] = useState("");
   const [text, setText] = useState("");
-  const [records, setRecords] = useState([]);
+  const [records, setRecords] = useState(() => {
+    // 這裡會在組件第一次渲染時執行
+    const saved = localStorage.getItem("moodRecords");
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        return [];
+      }
+    }
+    return [];
+  });
   const [editingId, setEditingId] = useState(null);
   const [editingScore, setEditingScore] = useState("");
   const [editingText, setEditingText] = useState("");
@@ -83,17 +94,6 @@ const MoodTracker = () => {
       localStorage.removeItem("moodRecords");
     }
   }, [records]);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("moodRecords");
-    if (saved) {
-      try {
-        setRecords(JSON.parse(saved));
-      } catch (error) {
-        console.error("載入資料失敗", error);
-      }
-    }
-  }, []);
 
   return (
     <div className="p-1 m-1 border-2 ">
