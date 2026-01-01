@@ -25,7 +25,7 @@ const MoodChart = ({ moodRecords }) => {
 
     return sortedRecords.map((record, index) => ({
       // 用日期+時間作為 key，確保每筆資料都不同
-      date:`${record.date}`,
+      date: `${record.date}`,
       dateTime: `${record.date} ${record.time.slice(0, 6)}`,
       // 如果同一天有多筆，顯示時間；如果只有一筆，只顯示日期
       displayKey:
@@ -43,11 +43,11 @@ const MoodChart = ({ moodRecords }) => {
   const chartData = processChartData();
   const getUniqueDays = () => {
     if (!moodRecords || moodRecords.length === 0) return 0;
-    
-    const uniqueDates = new Set(moodRecords.map(record => record.date));
+
+    const uniqueDates = new Set(moodRecords.map((record) => record.date));
     return uniqueDates.size;
   };
-  
+
   //自訂Tooltip 內容
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -93,8 +93,8 @@ const MoodChart = ({ moodRecords }) => {
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
             <XAxis dataKey="date" tick={{ fontSize: 12 }} stroke="#666" />
             <YAxis
-              domain={[1, 5]}
-              ticks={[1, 2, 3, 4, 5]}
+              domain={[0, 5]}
+              ticks={[0, 1, 2, 3, 4, 5]}
               tick={{ fontSize: 12 }}
               stroke="#666"
             />
